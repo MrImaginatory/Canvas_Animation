@@ -1,3 +1,5 @@
+// Designs/CanvasRings.jsx
+
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 
 export default function CanvasRings({

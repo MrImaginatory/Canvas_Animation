@@ -1,3 +1,5 @@
+// Designs/MeshGrid.jsx
+
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 
 // Reusable mesh grid component

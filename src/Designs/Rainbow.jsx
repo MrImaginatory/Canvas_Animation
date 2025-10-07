@@ -1,3 +1,5 @@
+// Designs/Rainbow.jsx
+
 import React, { useEffect, useRef, useState } from 'react'
 import { Renderer, Transform, Mesh, Program, Vec2, Texture, RenderTarget, Triangle, Geometry } from 'ogl'
 
