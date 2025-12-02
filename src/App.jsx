@@ -7,6 +7,8 @@ import GridBoxes from './Designs/GridBoxes'
 import Orb from './Designs/Orb'
 // import Metaballs from './Designs/Metaballs'
 import ThreeSphere from './Designs/threeSpehere'
+import Geist from './Designs/Geist'
+import MatrixDesign from './Designs/MatrixDesign'
 import './App.css'
 
 const designs = [
@@ -16,6 +18,8 @@ const designs = [
   { path: '/grid-boxes', component: GridBoxes, name: 'Grid Boxes' },
   { path: '/orb', component: Orb, name: 'Orb' },
   { path: '/three-sphere', component: ThreeSphere, name: 'Three Sphere' },
+  { path: '/geist', component: Geist, name: 'Geist' },
+  { path: '/matrix', component: MatrixDesign, name: 'Matrix' },
 ]
 
 function Navigation() {

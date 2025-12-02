@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.matrix-wrapper {
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.matrix-wrapper h1 {
+    color: green;
+    font-family: 'Share Tech Mono', 'Cascadia Code', Menlo, Monaco, 'Courier New', monospace;
+    font-size: 6rem;
+    filter: drop-shadow(0px 0px 5px currentColor);
+    margin: 0;
+    z-index: 10;
+    position: relative;
+}
+
+.matrix-wrapper h1::after {
+    content: '';
+    display: inline-block;
+    width: .2em;
+    height: .7em;
+    background-color: currentColor;
+    margin-left: .1em;
+    animation: blink 1s linear infinite forwards;
+    vertical-align: baseline;
+}
+
+.matrix-wrapper .grid-container {
+    --grid: 10rem;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+    perspective: 100rem;
+    animation: rotate 100s linear infinite forwards;
+}
+
+.matrix-wrapper .grid-container .plane {
+    --dir: 1;
+    width: 300%;
+    height: 150%;
+    min-height: 70rem;
+    position: absolute;
+    bottom: 0;
+    transform-style: preserve-3d;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotateX(85deg);
+}
+
+.matrix-wrapper .grid-container .plane:last-child {
+    --dir: -1;
+    top: 0;
+    transform-origin: top center;
+    transform: translateX(-50%) rotateX(-85deg);
+}
+
+.matrix-wrapper .grid-container .plane:last-child>*::after {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 255) var(--grid), rgba(0, 0, 0, 0));
+}
+
+.matrix-wrapper .grid-container .plane>* {
+    transform-style: preserve-3d;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.matrix-wrapper .grid-container .plane>*::before,
+.matrix-wrapper .grid-container .plane>*::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.matrix-wrapper .grid-container .plane>*::before {
+    background-image: repeating-linear-gradient(to left, green, green 4px, transparent 4px, transparent var(--grid)),
+        repeating-linear-gradient(to bottom, green, green 4px, transparent 4px, transparent var(--grid));
+    animation: move 1s linear infinite forwards;
+}
+
+.matrix-wrapper .grid-container .plane>*::after {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 255) var(--grid), rgba(0, 0, 0, 0));
+    z-index: 1;
+    transform: translateZ(1px);
+}
+
+.matrix-wrapper .grid-container .plane .glow {
+    filter: blur(1rem);
+    z-index: 1;
+    mix-blend-mode: plus-lighter;
+}
+
+@keyframes move {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(calc(var(--grid) * var(--dir)));
+    }
+}
+
+@keyframes blink {
+    0% {
+        visibility: visible;
+    }
+
+    50% {
+        visibility: visible;
+    }
+
+    51% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(360deg);
+        /* Placeholder, user didn't specify rotate keyframes but used it */
+    }
+}
+
+/* Note: The user provided 'animation: rotate 100s linear infinite forwards;' but didn't provide @keyframes rotate. 
+   I'll assume a simple rotation or just leave it defined if it was missed in the snippet. 
+   Actually, looking at the snippet, 'rotate' keyframes were NOT provided. 
+   I will add a placeholder or try to infer. 
+   Given the context of 'matrix' and 3d planes, it might be rotating the view or just doing nothing if not defined.
+   I'll add a basic rotation to satisfy the animation property, or maybe it was 'move'? 
+   Wait, the user snippet had 'animation: rotate 100s linear infinite forwards;' on .grid-container.
+   But no @keyframes rotate. I will add a default one.
+*/
+@keyframes rotate {
+    0% {
+        perspective-origin: 50% 50%;
+    }
+
+    50% {
+        perspective-origin: 50% 40%;
+    }
+
+    100% {
+        perspective-origin: 50% 50%;
+    }
+}
