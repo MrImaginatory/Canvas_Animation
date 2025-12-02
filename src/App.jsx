@@ -9,6 +9,7 @@ import Orb from './Designs/Orb'
 import ThreeSphere from './Designs/threeSpehere'
 import Geist from './Designs/Geist'
 import MatrixDesign from './Designs/MatrixDesign'
+import GhostMouse from './Designs/GhostMouse'
 import './App.css'
 
 const designs = [
@@ -20,6 +21,7 @@ const designs = [
   { path: '/three-sphere', component: ThreeSphere, name: 'Three Sphere' },
   { path: '/geist', component: Geist, name: 'Geist' },
   { path: '/matrix', component: MatrixDesign, name: 'Matrix' },
+  { path: '/ghost-mouse', component: GhostMouse, name: 'Ghost Mouse' },
 ]
 
 function Navigation() {

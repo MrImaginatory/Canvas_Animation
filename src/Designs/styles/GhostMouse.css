@@ -1,0 +1,13 @@
+.ghost-mouse-wrapper {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.ghost-mouse-wrapper canvas {
+    display: block;
+}
