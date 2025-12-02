@@ -1,7 +1,7 @@
 // Designs/Orb.jsx
 
 import React, { useEffect, useRef } from 'react'
-import './Orb.css'
+import './styles/Orb.css'
 
 export default function Orb({
   className,
@@ -12,7 +12,7 @@ export default function Orb({
 }) {
   const rootRef = useRef(null)
   const circlesRef = useRef([])
-  const stopRef = useRef(() => {})
+  const stopRef = useRef(() => { })
 
   useEffect(() => {
     const root = rootRef.current

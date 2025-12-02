@@ -1,38 +1,92 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import CanvasRings from './Designs/CanvasRings'
 import MeshGrid from './Designs/MeshGrid'
 import Rainbow from './Designs/Rainbow'
+import GridBoxes from './Designs/GridBoxes'
+import Orb from './Designs/Orb'
+// import Metaballs from './Designs/Metaballs'
+import ThreeSphere from './Designs/threeSpehere'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const designs = [
+  { path: '/rings', component: CanvasRings, name: 'Canvas Rings' },
+  { path: '/mesh', component: MeshGrid, name: 'Mesh Grid' },
+  { path: '/rainbow', component: Rainbow, name: 'Rainbow' },
+  { path: '/grid-boxes', component: GridBoxes, name: 'Grid Boxes' },
+  { path: '/orb', component: Orb, name: 'Orb' },
+  { path: '/three-sphere', component: ThreeSphere, name: 'Three Sphere' },
+]
+
+function Navigation() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const currentIndex = designs.findIndex(d => d.path === location.pathname)
+
+  // If we are not on a design page (e.g. root), default to first
+  const activeIndex = currentIndex === -1 ? 0 : currentIndex
+
+  const handleNext = () => {
+    const nextIndex = (activeIndex + 1) % designs.length
+    navigate(designs[nextIndex].path)
+  }
+
+  const handlePrev = () => {
+    const prevIndex = (activeIndex - 1 + designs.length) % designs.length
+    navigate(designs[prevIndex].path)
+  }
 
   return (
-    <>
+    <div style={{
+      position: 'fixed',
+      bottom: '20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      display: 'flex',
+      gap: '20px',
+      zIndex: 1000,
+      background: 'rgba(0,0,0,0.5)',
+      padding: '10px 20px',
+      borderRadius: '30px',
+      backdropFilter: 'blur(5px)'
+    }}>
+      <button onClick={handlePrev} style={{ cursor: 'pointer', padding: '8px 16px', borderRadius: '20px', border: 'none', background: 'white', color: 'black', fontWeight: 'bold' }}>
+        Previous
+      </button>
+      <span style={{ color: 'white', alignSelf: 'center', fontWeight: 'bold' }}>
+        {designs[activeIndex].name}
+      </span>
+      <button onClick={handleNext} style={{ cursor: 'pointer', padding: '8px 16px', borderRadius: '20px', border: 'none', background: 'white', color: 'black', fontWeight: 'bold' }}>
+        Next
+      </button>
+    </div>
+  )
+}
 
-      <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      {/* <CanvasRings
-      width="100vw"
-      height="100vh"
-      initialDark={false}
-      spacing={20}
-      baseRadius={2}
-      maxRings={8}
-    /> */}
-    {/* <MeshGrid
-        spacing={30}
-        dotRadius={2}
-        maxDistortion={40}
-        dampening={0.08}
-        quality={0.85}
-        drawLines={false}
-        initialDark={true}
-      /> */}
-        <Rainbow />
-        
+function App() {
+  return (
+    <BrowserRouter>
+      <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
+        <Routes>
+          <Route path="/" element={<Navigate to={designs[0].path} replace />} />
+          {designs.map((design) => (
+            <Route
+              key={design.path}
+              path={design.path}
+              element={
+                <design.component
+                  // Pass common props if needed, or specific ones
+                  width="100vw"
+                  height="100vh"
+                />
+              }
+            />
+          ))}
+        </Routes>
+        <Navigation />
       </div>
-
-    </>
+    </BrowserRouter>
   )
 }
 

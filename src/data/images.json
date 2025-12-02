@@ -1,0 +1,152 @@
+[
+    {
+        "id": 1,
+        "url": "https://picsum.photos/id/10/200/200",
+        "title": "Forest",
+        "description": "A beautiful forest scene with lush greenery."
+    },
+    {
+        "id": 2,
+        "url": "https://picsum.photos/id/20/200/200",
+        "title": "Stationery",
+        "description": "A workspace setup with a laptop and notebook."
+    },
+    {
+        "id": 3,
+        "url": "https://picsum.photos/id/30/200/200",
+        "title": "Mug",
+        "description": "A white ceramic mug on a table."
+    },
+    {
+        "id": 4,
+        "url": "https://picsum.photos/id/40/200/200",
+        "title": "Cat",
+        "description": "A cute cat looking at the camera."
+    },
+    {
+        "id": 5,
+        "url": "https://picsum.photos/id/50/200/200",
+        "title": "Coast",
+        "description": "A rocky coast near the ocean."
+    },
+    {
+        "id": 6,
+        "url": "https://picsum.photos/id/60/200/200",
+        "title": "Office",
+        "description": "An office environment with computers."
+    },
+    {
+        "id": 7,
+        "url": "https://picsum.photos/id/70/200/200",
+        "title": "Tree",
+        "description": "A solitary tree in a field."
+    },
+    {
+        "id": 8,
+        "url": "https://picsum.photos/id/80/200/200",
+        "title": "Mountains",
+        "description": "Majestic mountains covered in clouds."
+    },
+    {
+        "id": 9,
+        "url": "https://picsum.photos/id/90/200/200",
+        "title": "River",
+        "description": "A flowing river with stones."
+    },
+    {
+        "id": 10,
+        "url": "https://picsum.photos/id/100/200/200",
+        "title": "Beach",
+        "description": "A sandy beach with waves."
+    },
+    {
+        "id": 11,
+        "url": "https://picsum.photos/id/110/200/200",
+        "title": "Wheat Field",
+        "description": "Golden wheat field under the sun."
+    },
+    {
+        "id": 12,
+        "url": "https://picsum.photos/id/120/200/200",
+        "title": "Berries",
+        "description": "Fresh strawberries in a basket."
+    },
+    {
+        "id": 13,
+        "url": "https://picsum.photos/id/130/200/200",
+        "title": "Abstract",
+        "description": "An abstract painting with colorful strokes."
+    },
+    {
+        "id": 14,
+        "url": "https://picsum.photos/id/140/200/200",
+        "title": "Trees",
+        "description": "A row of trees in autumn."
+    },
+    {
+        "id": 15,
+        "url": "https://picsum.photos/id/152/200/200",
+        "title": "Purple Flower",
+        "description": "A close-up of a vibrant purple flower."
+    },
+    {
+        "id": 16,
+        "url": "https://picsum.photos/id/160/200/200",
+        "title": "Mobile Phone",
+        "description": "A smartphone resting on a wooden table."
+    },
+    {
+        "id": 17,
+        "url": "https://picsum.photos/id/175/200/200",
+        "title": "Clock",
+        "description": "An antique clock showing the time."
+    },
+    {
+        "id": 18,
+        "url": "https://picsum.photos/id/180/200/200",
+        "title": "Laptop Work",
+        "description": "Hands typing on a laptop keyboard."
+    },
+    {
+        "id": 19,
+        "url": "https://picsum.photos/id/190/200/200",
+        "title": "Architecture",
+        "description": "Modern building architecture and glass."
+    },
+    {
+        "id": 20,
+        "url": "https://picsum.photos/id/200/200/200",
+        "title": "Cattle",
+        "description": "Highland cattle standing in a field."
+    },
+    {
+        "id": 21,
+        "url": "https://picsum.photos/id/210/200/200",
+        "title": "Brick Wall",
+        "description": "Texture of an old red brick wall."
+    },
+    {
+        "id": 22,
+        "url": "https://picsum.photos/id/220/200/200",
+        "title": "Train Tracks",
+        "description": "Railway tracks leading into the distance."
+    },
+    {
+        "id": 23,
+        "url": "https://picsum.photos/id/237/200/200",
+        "title": "Black Dog",
+        "description": "A black puppy playing in the grass."
+    },
+    {
+        "id": 24,
+        "url": "https://picsum.photos/id/240/200/200",
+        "title": "Stairs",
+        "description": "A spiral staircase viewed from above."
+    },
+    {
+        "id": 25,
+        "url": "https://picsum.photos/id/250/200/200",
+        "title": "Camera",
+        "description": "A vintage camera held in hands."
+    }
+]
