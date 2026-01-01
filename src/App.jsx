@@ -10,6 +10,11 @@ import ThreeSphere from './Designs/threeSpehere'
 import Geist from './Designs/Geist'
 import MatrixDesign from './Designs/MatrixDesign'
 import GhostMouse from './Designs/GhostMouse'
+import NeuralNoise from './Designs/NeuralNoise'
+import LiquidGradient from './Designs/LiquidGradient'
+import ParticleWave from './Designs/ParticleWave'
+import ParticleSwarm from './Designs/ParticleSwarm'
+import ProtonEffect from './Designs/ProtonEffect'
 import './App.css'
 
 const designs = [
@@ -22,6 +27,11 @@ const designs = [
   { path: '/geist', component: Geist, name: 'Geist' },
   { path: '/matrix', component: MatrixDesign, name: 'Matrix' },
   { path: '/ghost-mouse', component: GhostMouse, name: 'Ghost Mouse' },
+  { path: '/neural-noise', component: NeuralNoise, name: 'Neural Noise' },
+  { path: '/liquid-gradient', component: LiquidGradient, name: 'Liquid Gradient' },
+  { path: '/particle-wave', component: ParticleWave, name: 'Particle Wave' },
+  { path: '/particle-swarm', component: ParticleSwarm, name: 'Particle Swarm' },
+  { path: '/proton-effect', component: ProtonEffect, name: 'Proton Effect' },
 ]
 
 function Navigation() {
