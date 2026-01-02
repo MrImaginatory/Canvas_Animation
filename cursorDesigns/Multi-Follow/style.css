@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #111;
+    overflow: hidden;
+    cursor: none;
+    /* Hide standard cursor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.content h1 {
+    color: #333;
+    font-size: 2rem;
+    pointer-events: none;
+    user-select: none;
+}
+
+#cursor-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    filter: url(#goo);
+    z-index: 9999;
+}
+
+:root {
+    --hue-1: #ff0088;
+    --hue-2: #dd00ee;
+    --hue-3: #9911ff;
+    --hue-4: #1e75f7;
+    --hue-5: #0cdcf7;
+}
+
+.cursor-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, var(--hue-1), var(--hue-2), var(--hue-3), var(--hue-4), var(--hue-5));
+    /* Remove mix-blend-mode to allow true gooey merging, or keep 'screen'/'overlay' if desired. 
+       'exclusion' might conflict with the goo filter's alpha thresholding. 
+       Let's stick to normal blending for the goo effect. */
+}
