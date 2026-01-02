@@ -15,6 +15,7 @@ import LiquidGradient from './Designs/LiquidGradient'
 import ParticleWave from './Designs/ParticleWave'
 import ParticleSwarm from './Designs/ParticleSwarm'
 import ProtonEffect from './Designs/ProtonEffect'
+import Sakura from './Designs/Sakura'
 import './App.css'
 
 const designs = [
@@ -32,6 +33,7 @@ const designs = [
   { path: '/particle-wave', component: ParticleWave, name: 'Particle Wave' },
   { path: '/particle-swarm', component: ParticleSwarm, name: 'Particle Swarm' },
   { path: '/proton-effect', component: ProtonEffect, name: 'Proton Effect' },
+  { path: '/sakura', component: Sakura, name: 'Sakura' },
 ]
 
 function Navigation() {
