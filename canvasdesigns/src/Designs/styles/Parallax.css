@@ -1,0 +1,23 @@
+.parallax-wrap {
+  background: #fff url(https://i.imgur.com/NH1nLsV.png) repeat 0 0;
+  background-size: 500px;
+  color: #fff;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  text-shadow: 5px 5px black;
+  top: 0;
+  width: 100%;
+}
+
+.parallax-wrap h2 {
+  font-size: 4.5em;
+  margin-top: 20vh;
+}
+
+.parallax-wrap h4 {
+  font-size: 3em;
+}

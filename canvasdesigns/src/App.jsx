@@ -16,6 +16,8 @@ import ParticleWave from './Designs/ParticleWave'
 import ParticleSwarm from './Designs/ParticleSwarm'
 import ProtonEffect from './Designs/ProtonEffect'
 import Sakura from './Designs/Sakura'
+import Parallax from './Designs/Parallax'
+import GradientWave from './Designs/GradientWave'
 import './App.css'
 
 const designs = [
@@ -34,6 +36,8 @@ const designs = [
   { path: '/particle-swarm', component: ParticleSwarm, name: 'Particle Swarm' },
   { path: '/proton-effect', component: ProtonEffect, name: 'Proton Effect' },
   { path: '/sakura', component: Sakura, name: 'Sakura' },
+  { path: '/parallax', component: Parallax, name: 'Parallax' },
+  { path: '/gradient-wave', component: GradientWave, name: 'Gradient Wave' },
 ]
 
 function Navigation() {
