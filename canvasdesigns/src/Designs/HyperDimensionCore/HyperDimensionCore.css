@@ -1,0 +1,266 @@
+/* HyperDimensionCore.css */
+
+.hyper-core-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #020205; /* bg-[#020205] */
+  overflow: hidden;
+  font-family: sans-serif;
+  color: white;
+}
+
+.hyper-core-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Glass Panel UI */
+.hyper-core-ui-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 1.5rem; /* p-6 */
+}
+
+.hyper-core-card {
+  max-width: 36rem; /* max-w-xl */
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.03); /* bg-white/[0.03] */
+  backdrop-filter: blur(48px); /* backdrop-blur-3xl */
+  -webkit-backdrop-filter: blur(48px);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* border-white/10 */
+  border-radius: 4rem; /* rounded-[4rem] */
+  padding: 3rem; /* p-12 */
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.8); /* shadow-[0_0_100px_rgba(0,0,0,0.8)] */
+  pointer-events: auto;
+}
+
+.hyper-core-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem; /* mb-10 */
+}
+
+/* Badge - Emerald Style */
+.hyper-core-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* gap-3 */
+  margin-bottom: 0.5rem; /* mb-2 */
+  color: #34d399; /* text-emerald-400 */
+}
+
+.hyper-core-badge span {
+  font-size: 0.6rem; /* text-[9px] */
+  text-transform: uppercase;
+  letter-spacing: 0.4em; /* tracking-[0.4em] */
+  font-weight: 700; /* font-bold */
+  color: rgba(52, 211, 153, 0.8); /* text-emerald-400/80 */
+}
+
+.hyper-core-title {
+  font-size: 3.75rem; /* text-6xl */
+  font-weight: 900; /* font-black */
+  letter-spacing: -0.05em; /* tracking-tighter */
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+  line-height: 1;
+}
+
+.hyper-core-subtitle {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.625rem; /* text-[10px] */
+  font-family: monospace; /* font-mono */
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* tracking-[0.2em] */
+  margin: 0;
+}
+
+/* Play Button */
+.hyper-core-play-btn {
+  padding: 1.25rem; /* p-5 */
+  background-color: rgba(16, 185, 129, 0.1); /* bg-emerald-500/10 */
+  border-radius: 2rem; /* rounded-[2rem] */
+  border: 1px solid rgba(16, 185, 129, 0.2); /* border-emerald-500/20 */
+  color: #34d399; /* text-emerald-400 */
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hyper-core-play-btn:hover {
+  background-color: rgba(16, 185, 129, 0.2); /* bg-emerald-500/20 */
+}
+
+/* Controls Grid */
+.hyper-core-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 3rem; /* gap-x-12 */
+  row-gap: 2.5rem; /* gap-y-10 */
+}
+
+@media (min-width: 768px) {
+  .hyper-core-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.hyper-core-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space-y-4 */
+}
+
+/* Custom Slider Styles */
+.hyper-core-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.hyper-core-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+  font-size: 0.6rem; /* text-[9px] */
+  font-weight: 700; /* font-bold */
+  text-transform: uppercase;
+  letter-spacing: 0.2em; /* tracking-[0.2em] */
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s;
+}
+
+.hyper-core-control-group:hover .hyper-core-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hyper-core-value {
+  font-size: 0.625rem; /* text-[10px] */
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+.hyper-core-slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1rem; /* h-4 */
+}
+
+.hyper-core-range {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  z-index: 10;
+  outline: none;
+}
+
+/* Hide default thumb so we can use the custom progress bar visual mostly,
+   but actually we wanted a standard thumb. The original code used accent-white. */
+.hyper-core-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  /* Making it invisible to rely on custom UI if desired?
+     Actually the original code has accent-white and standard thumb behavior.
+     Let's keep standard white thumb. */
+}
+
+.hyper-core-range::-moz-range-thumb {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+/* Colored progress bar trace */
+.hyper-core-progress-trace {
+  position: absolute;
+  height: 2px;
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.trace-emerald { background-color: #10b981; } /* emerald-500 */
+.trace-blue { background-color: #3b82f6; } /* blue-500 */
+.trace-yellow { background-color: #eab308; } /* yellow-500 */
+.trace-purple { background-color: #a855f7; } /* purple-500 */
+
+
+/* Footer */
+.hyper-core-footer {
+  margin-top: 3.5rem; /* mt-14 */
+  padding-top: 2rem; /* pt-8 */
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* border-white/5 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.4;
+}
+
+.hyper-core-footer-text {
+  font-size: 0.5rem; /* text-[8px] */
+  font-weight: 700; /* font-bold */
+  text-transform: uppercase;
+  letter-spacing: 0.5em; /* tracking-[0.5em] */
+}
+
+.hyper-core-dots {
+  display: flex;
+  gap: 0.375rem; /* gap-1.5 */
+}
+
+.hyper-dot {
+  width: 0.25rem; /* w-1 */
+  height: 0.25rem; /* h-1 */
+  border-radius: 50%;
+  background-color: #34d399; /* emerald-400 */
+}
+
+/* Side Data Stream */
+.hyper-core-stream {
+  position: absolute;
+  left: 2.5rem; /* left-10 */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* gap-8 */
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.hyper-core-stream-text {
+  transform: rotate(90deg);
+  font-size: 0.5rem; /* text-[8px] */
+  font-family: monospace; /* font-mono */
+  letter-spacing: 1em; /* tracking-[1em] */
+  white-space: nowrap;
+  text-transform: uppercase;
+}

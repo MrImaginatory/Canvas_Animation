@@ -1,0 +1,212 @@
+/* PlasmaShader.css */
+
+.plasma-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  overflow: hidden;
+  font-family: sans-serif;
+  color: white;
+}
+
+.plasma-canvas {
+  position: absolute;
+  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0; */
+  width: 100%;
+  height: 100%;
+}
+
+.plasma-ui-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 1.5rem; /* p-6 */
+}
+
+.plasma-card {
+  max-width: 36rem; /* max-w-xl */
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px); /* backdrop-blur-xl */
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1.5rem; /* rounded-3xl */
+  padding: 2rem; /* p-8 */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
+  pointer-events: auto;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.plasma-card:hover {
+  transform: scale(1.01);
+}
+
+.plasma-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.plasma-title {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 700; /* font-bold */
+  letter-spacing: -0.025em; /* tracking-tight */
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.plasma-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.plasma-play-btn {
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plasma-play-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.plasma-controls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+.plasma-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .plasma-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.plasma-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.plasma-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Range Input Styling */
+.plasma-range {
+  width: 100%;
+  height: 0.375rem; /* h-1.5 */
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.plasma-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.plasma-range::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+}
+
+/* Custom accent colors via class props or inline styles logic could be used, 
+   but for pure CSS we can just use a default or specific classes */
+.plasma-range.accent-purple::-webkit-slider-thumb {
+  background: #a855f7; /* purple-500 */
+}
+.plasma-range.accent-purple::-moz-range-thumb {
+  background: #a855f7;
+}
+
+.plasma-range.accent-blue::-webkit-slider-thumb {
+  background: #3b82f6; /* blue-500 */
+}
+.plasma-range.accent-blue::-moz-range-thumb {
+  background: #3b82f6;
+}
+
+.plasma-palettes {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.plasma-palettes-list {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.plasma-palette-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.plasma-palette-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.plasma-footer {
+  margin-top: 2rem;
+  font-size: 0.625rem; /* text-[10px] */
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* tracking-widest */
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+
+.plasma-info-bottom {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  display: flex;
+  gap: 1rem;
+}

@@ -18,6 +18,11 @@ import ProtonEffect from './Designs/ProtonEffect'
 import Sakura from './Designs/Sakura'
 import Parallax from './Designs/Parallax'
 import GradientWave from './Designs/GradientWave'
+import PlasmaShader from './Designs/PlasmaShader/PlasmaShader'
+import LiquidRainbow from './Designs/LiquidRainbow/LiquidRainbow'
+import SpectralLiquid from './Designs/SpectralLiquid/SpectralLiquid'
+import HyperDimensionCore from './Designs/HyperDimensionCore/HyperDimensionCore'
+import EtherealSilk from './Designs/EtherealSilk/EtherealSilk'
 import './App.css'
 
 const designs = [
@@ -38,6 +43,11 @@ const designs = [
   { path: '/sakura', component: Sakura, name: 'Sakura' },
   { path: '/parallax', component: Parallax, name: 'Parallax' },
   { path: '/gradient-wave', component: GradientWave, name: 'Gradient Wave' },
+  { path: '/plasma-shader', component: PlasmaShader, name: 'Plasma Shader' },
+  { path: '/liquid-rainbow', component: LiquidRainbow, name: 'Liquid Rainbow' },
+  { path: '/spectral-liquid', component: SpectralLiquid, name: 'Spectral Liquid' },
+  { path: '/hyper-core', component: HyperDimensionCore, name: 'Hyper Core' },
+  { path: '/ethereal-silk', component: EtherealSilk, name: 'Ethereal Silk' },
 ]
 
 function Navigation() {

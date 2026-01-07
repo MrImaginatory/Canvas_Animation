@@ -192,7 +192,11 @@ export default function ProtonEffect() {
             renderer.dispose();
         }
         if (proton) {
-            proton.destroy();
+            try {
+                proton.destroy();
+            } catch (e) {
+                console.warn('Proton destruction error:', e);
+            }
         }
     };
   }, []);
