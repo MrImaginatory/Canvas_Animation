@@ -1,0 +1,175 @@
+.cyber-cppn-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    font-family: monospace;
+    font-size: 10px;
+}
+
+@media (min-width: 640px) {
+    .cyber-cppn-container {
+        font-size: 12px;
+    }
+}
+
+.cyber-cppn-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+}
+
+.cyber-hud-container {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    transition: all 300ms ease-in-out;
+}
+
+.hud-visible {
+    transform: translateX(0);
+}
+
+.hud-hidden {
+    transform: translateX(-0.5rem);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cyber-hud-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    padding: 1rem;
+    color: #22d3ee;
+    box-shadow: 0 0 20px rgba(0, 255, 240, 0.15);
+    border-radius: 0.125rem;
+    width: 14rem;
+}
+
+.cyber-hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cyber-hud-title {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #67e8f9;
+}
+
+.cyber-hud-status {
+    font-size: 8px;
+    animation: cyber-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes cyber-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.cyber-hud-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.control-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.cyber-range-input {
+    width: 100%;
+    height: 0.25rem;
+    background-color: #083344;
+    appearance: none;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.cyber-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: currentColor;
+    cursor: pointer;
+}
+
+.accent-cyan { color: #22d3ee; }
+.accent-magenta { color: #ea0b8c; } /* Trying to match 'accent-magenta-500' roughly or standard magenta */
+.accent-white { color: white; }
+
+.cyber-hud-footer {
+    padding-top: 0.5rem;
+    margin-top: 1rem;
+    font-size: 9px;
+    color: #0891b2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cyber-toggle-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: #06b6d4;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background-color 150ms;
+}
+
+.cyber-toggle-button:hover {
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+.corner-bracket {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    border-color: rgba(6, 182, 212, 0.2);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+}
+
+.top-left {
+    top: 0;
+    left: 0;
+    border-top-width: 1px;
+    border-left-width: 1px;
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+    border-top-width: 1px;
+    border-right-width: 1px;
+}
+
+.bottom-left {
+    bottom: 0;
+    left: 0;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+}

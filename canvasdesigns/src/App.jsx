@@ -23,6 +23,11 @@ import LiquidRainbow from './Designs/LiquidRainbow/LiquidRainbow'
 import SpectralLiquid from './Designs/SpectralLiquid/SpectralLiquid'
 import HyperDimensionCore from './Designs/HyperDimensionCore/HyperDimensionCore'
 import EtherealSilk from './Designs/EtherealSilk/EtherealSilk'
+import DarkVeil from './Designs/DarkVeil/DarkVeil'
+import VeilCore from './Designs/VeilCore/VeilCore'
+import CyberCPPN from './Designs/CyberCPPN/CyberCPPN'
+import NeuralFlux from './Designs/NeuralFlux/NeuralFlux'
+import FluidPrism from './Designs/FluidPrism/FluidPrism'
 import './App.css'
 
 const designs = [
@@ -48,6 +53,11 @@ const designs = [
   { path: '/spectral-liquid', component: SpectralLiquid, name: 'Spectral Liquid' },
   { path: '/hyper-core', component: HyperDimensionCore, name: 'Hyper Core' },
   { path: '/ethereal-silk', component: EtherealSilk, name: 'Ethereal Silk' },
+  { path: '/dark-veil', component: DarkVeil, name: 'Dark Veil' },
+  { path: '/veil-core', component: VeilCore, name: 'Veil Core' },
+  { path: '/cyber-cppn', component: CyberCPPN, name: 'Cyber CPPN' },
+  { path: '/neural-flux', component: NeuralFlux, name: 'Neural Flux' },
+  { path: '/fluid-prism', component: FluidPrism, name: 'Fluid Prism' },
 ]
 
 function Navigation() {
