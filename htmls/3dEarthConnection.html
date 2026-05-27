@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Sphere - Global Communications</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+            background-color: #050505; /* Very dark background for better dot contrast */
+            font-family: sans-serif;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: #ffffff;
+            pointer-events: none; /* Let clicks pass through text */
+            opacity: 0.7;
+            user-select: none;
+        }
+        canvas {
+            display: block; /* Removes default inline spacing */
+        }
+    </style>
+    <!-- Import map to load Three.js and Addons directly from a CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="info">Drag to rotate • Zoom is disabled • Visualizing Data Flow from Surat</div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+        scene.fog = new THREE.Fog(0x050505, 2.5, 4.5);
+
+        // 2. Camera Setup
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 2.1;
+
+        // 3. Renderer Setup
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // 4. Globe Setup
+        const globeGroup = new THREE.Group();
+        scene.add(globeGroup);
+
+        // Inner Occlusion Sphere
+        const innerGeometry = new THREE.SphereGeometry(0.99, 64, 64);
+        const innerMaterial = new THREE.MeshBasicMaterial({
+            color: 0x000000,
+            transparent: true,
+            opacity: 0.9
+        });
+        const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
+        globeGroup.add(innerSphere);
+
+        // --- MATH HELPERS ---
+        function latLonToVector3(lat, lon, radius) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+            const x = -(radius * Math.sin(phi) * Math.cos(theta));
+            const z = (radius * Math.sin(phi) * Math.sin(theta));
+            const y = (radius * Math.cos(phi));
+            return new THREE.Vector3(x, y, z);
+        }
+
+        // --- COMMUNICATION LINES LOGIC ---
+        const commsGroup = new THREE.Group();
+        globeGroup.add(commsGroup);
+
+        // Origin: Surat, Gujarat
+        const indiaCoords = { lat: 21.1702, lon: 72.8311 }; 
+        
+        // Expanded Targets List
+        const targets = [
+            { name: "USA (NY)", lat: 40.7128, lon: -74.0060 },
+            { name: "USA (SF)", lat: 37.7749, lon: -122.4194 },
+            { name: "UK (London)", lat: 51.5074, lon: -0.1278 },
+            { name: "Japan (Tokyo)", lat: 35.6762, lon: 139.6503 },
+            { name: "Australia (Sydney)", lat: -33.8688, lon: 151.2093 },
+            { name: "Russia (Moscow)", lat: 55.7558, lon: 37.6173 },
+            { name: "Brazil (Rio)", lat: -22.9068, lon: -43.1729 },
+            { name: "South Africa (Cape Town)", lat: -33.9249, lon: 18.4241 },
+            { name: "Germany (Berlin)", lat: 52.5200, lon: 13.4050 },
+            { name: "Canada (Toronto)", lat: 43.6532, lon: -79.3832 },
+            { name: "South Korea (Seoul)", lat: 37.5665, lon: 126.9780 },
+            { name: "Indonesia (Jakarta)", lat: -6.2088, lon: 106.8456 },
+            // New Connections
+            { name: "UAE (Dubai)", lat: 25.2048, lon: 55.2708 },
+            { name: "France (Paris)", lat: 48.8566, lon: 2.3522 },
+            { name: "Singapore", lat: 1.3521, lon: 103.8198 },
+            { name: "China (Shanghai)", lat: 31.2304, lon: 121.4737 },
+            { name: "Egypt (Cairo)", lat: 30.0444, lon: 31.2357 },
+            { name: "Mexico (Mexico City)", lat: 19.4326, lon: -99.1332 },
+            { name: "Argentina (Buenos Aires)", lat: -34.6037, lon: -58.3816 },
+            { name: "Nigeria (Lagos)", lat: 6.5244, lon: 3.3792 }
+        ];
+
+        const radius = 1;
+        const origin = latLonToVector3(indiaCoords.lat, indiaCoords.lon, radius);
+
+        // Mark India (Source)
+        const markerGeo = new THREE.SphereGeometry(0.015, 8, 8);
+        const markerMat = new THREE.MeshBasicMaterial({ color: 0xffaa00 }); // Orange marker
+        const marker = new THREE.Mesh(markerGeo, markerMat);
+        marker.position.copy(origin);
+        commsGroup.add(marker);
+
+        // Create Lines and Particles
+        const animatedParticles = [];
+
+        targets.forEach(target => {
+            const dest = latLonToVector3(target.lat, target.lon, radius);
+            
+            // Calculate Control Point for Curve (Midpoint elevated)
+            const distance = origin.distanceTo(dest);
+            const mid = origin.clone().add(dest).multiplyScalar(0.5).normalize().multiplyScalar(radius + (distance * 0.5));
+            
+            // Create Curve
+            const curve = new THREE.QuadraticBezierCurve3(origin, mid, dest);
+            
+            // Draw Line using TubeGeometry for THICKNESS
+            // Args: Curve, Segments, Radius (Thickness), RadialSegments, Closed
+            const tubeGeometry = new THREE.TubeGeometry(curve, 20, 0.0025, 4, false);
+            const tubeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x034efc, // Futuristic Purple
+                transparent: true, 
+                opacity: 0.5,
+                depthWrite: false, // Helps transparency sorting
+                blending: THREE.AdditiveBlending // Glowing effect
+            });
+            const line = new THREE.Mesh(tubeGeometry, tubeMaterial);
+            commsGroup.add(line);
+
+            // Create Moving Particle
+            const particleGeo = new THREE.SphereGeometry(0.008, 4, 4);
+            const particleMat = new THREE.MeshBasicMaterial({ color: 0x00ffff }); // Cyan particles
+            const particle = new THREE.Mesh(particleGeo, particleMat);
+            commsGroup.add(particle);
+
+            animatedParticles.push({
+                mesh: particle,
+                curve: curve,
+                speed: 0.005 + Math.random() * 0.005, // Random speed
+                pos: Math.random() // Random starting position
+            });
+        });
+
+
+        // --- DOT GENERATION ---
+        const imgLoader = new THREE.ImageLoader();
+        imgLoader.setCrossOrigin('Anonymous');
+        imgLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg', function(image) {
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            const context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0);
+            const data = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+            const dots = [];
+            const step = 3; 
+
+            for (let y = 0; y < canvas.height; y += step) {
+                for (let x = 0; x < canvas.width; x += step) {
+                    const i = (y * canvas.width + x) * 4;
+                    if (data[i] < 50) {
+                        const jitterX = (Math.random() - 0.5) * step * 1.5;
+                        const jitterY = (Math.random() - 0.5) * step * 1.5;
+                        const lat = 90 - ((y + jitterY) / canvas.height) * 180;
+                        const lon = ((x + jitterX) / canvas.width) * 360 - 180;
+                        dots.push(latLonToVector3(lat, lon, radius));
+                    }
+                }
+            }
+
+            const dotGeometry = new THREE.SphereGeometry(0.0035, 5, 5); 
+            // Changed color to gray (0x888888) to reduce brightness
+            const dotMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+            const instancedMesh = new THREE.InstancedMesh(dotGeometry, dotMaterial, dots.length);
+            
+            const dummy = new THREE.Object3D();
+            for (let i = 0; i < dots.length; i++) {
+                dummy.position.copy(dots[i]);
+                dummy.updateMatrix();
+                instancedMesh.setMatrixAt(i, dummy.matrix);
+            }
+
+            globeGroup.add(instancedMesh);
+        });
+
+        // 5. Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; 
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.enableZoom = false; 
+        controls.enablePan = false;
+        
+        // --- RESTRICT ROTATION TO HORIZONTAL ONLY ---
+        controls.minPolarAngle = Math.PI / 2.5; // Lock vertical angle to equator
+        controls.maxPolarAngle = Math.PI / 2.5;
+
+        // 6. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // Update Particles
+            animatedParticles.forEach(obj => {
+                obj.pos += obj.speed;
+                if (obj.pos > 1) obj.pos = 0; // Loop
+                
+                // Get point along the curve
+                const point = obj.curve.getPoint(obj.pos);
+                obj.mesh.position.copy(point);
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

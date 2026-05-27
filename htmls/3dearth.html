@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Sphere - Dense Organic Dots</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrollbars */
+            background-color: #050505; /* Very dark background for better dot contrast */
+            font-family: sans-serif;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: #ffffff;
+            pointer-events: none; /* Let clicks pass through text */
+            opacity: 0.7;
+            user-select: none;
+        }
+        canvas {
+            display: block; /* Removes default inline spacing */
+        }
+    </style>
+    <!-- Import map to load Three.js and Addons directly from a CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="info">Drag to rotate • Zoom is disabled • Generating High Density Map...</div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // 1. Scene Setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+        
+        // Add subtle fog to fade distant dots
+        scene.fog = new THREE.Fog(0x050505, 2.5, 4.5);
+
+        // 2. Camera Setup
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 2.2;
+
+        // 3. Renderer Setup
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // 4. Generate Dotted Globe
+        const globeGroup = new THREE.Group();
+        scene.add(globeGroup);
+
+        // Helper function to convert Lat/Lon (UV) to 3D Vector
+        function latLonToVector3(lat, lon, radius) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+
+            const x = -(radius * Math.sin(phi) * Math.cos(theta));
+            const z = (radius * Math.sin(phi) * Math.sin(theta));
+            const y = (radius * Math.cos(phi));
+
+            return new THREE.Vector3(x, y, z);
+        }
+
+        const imgLoader = new THREE.ImageLoader();
+        imgLoader.setCrossOrigin('Anonymous');
+        
+        // Using the specular map: Land is dark (low value), Ocean is light (high value)
+        imgLoader.load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg', function(image) {
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = image.width;
+            canvas.height = image.height;
+            const context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0);
+
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            const dots = [];
+            const radius = 1;
+            
+            // Reduced step size for much higher density (was 12)
+            const step = 6; 
+
+            for (let y = 0; y < canvas.height; y += step) {
+                for (let x = 0; x < canvas.width; x += step) {
+                    
+                    const i = (y * canvas.width + x) * 4;
+                    
+                    if (data[i] < 50) {
+                        
+                        // Add JITTER to coordinates to make it uneven/organic
+                        // We offset the x and y by a random amount within the step range
+                        const jitterX = (Math.random() - 0.5) * step * 1.5;
+                        const jitterY = (Math.random() - 0.5) * step * 1.5;
+
+                        // Calculate Lat/Lon with jittered coordinates
+                        const lat = 90 - ((y + jitterY) / canvas.height) * 180;
+                        const lon = ((x + jitterX) / canvas.width) * 360 - 180;
+
+                        const pos = latLonToVector3(lat, lon, radius);
+                        dots.push(pos);
+                    }
+                }
+            }
+
+            // Reduced dot size slightly (0.006 -> 0.004) to accommodate higher density without clumping too much
+            const dotGeometry = new THREE.SphereGeometry(0.0045, 5, 5); 
+            const dotMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            
+            const instancedMesh = new THREE.InstancedMesh(dotGeometry, dotMaterial, dots.length);
+            
+            const dummy = new THREE.Object3D();
+            
+            for (let i = 0; i < dots.length; i++) {
+                dummy.position.copy(dots[i]);
+                dummy.updateMatrix();
+                instancedMesh.setMatrixAt(i, dummy.matrix);
+            }
+
+            globeGroup.add(instancedMesh);
+            
+            document.getElementById('info').textContent = "Drag to rotate • Zoom is disabled";
+
+        }, undefined, function(err) {
+            console.error('An error happened loading the texture.', err);
+            document.getElementById('info').textContent = "Error loading map data.";
+        });
+
+        // 5. Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; 
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 1.0;
+        
+        // --- DISABLE ZOOM & PAN ---
+        controls.enableZoom = false; 
+        controls.enablePan = false;
+
+        // 6. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // 7. Handle Window Resize
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
